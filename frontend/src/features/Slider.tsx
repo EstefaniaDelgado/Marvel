@@ -37,9 +37,10 @@ const comicCovers = [
 
 export default function Slider() {
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center  mx-auto   mb-8 bg-[#E4E6EB]">
-      <div className="bg-yellow-200 pt-4 w-full h-full md:w-[75%] flex ">
+    <div className="w-full pt-4 flex flex-col justify-center items-center  mx-auto mb-8 bg-[#E4E6EB]">
+      <div className="pt-4 w-full md:w-[75%] flex flex-col justify-center items-center gap-8 ">
         <Swiper
+          initialSlide={comicCovers.length /2}
           modules={[Pagination, Scrollbar, EffectCoverflow]}
           effect={'coverflow'}
           grabCursor={true}
@@ -55,9 +56,7 @@ export default function Slider() {
           }}
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
-          // className="w-full max-w-5xl "
           className="w-full max-w-7xl"
-      
         >
           {comicCovers.map((comic) => (
             <SwiperSlide
@@ -67,7 +66,7 @@ export default function Slider() {
               <img
                 src={comic.image}
                 alt={comic.title}
-                className="w-full h-80 lg:h-[400px] object-cover shadow-lg"
+                className="w-full h-72 lg:h-[400px] xl:h-[500px] object-cover shadow-lg"
               />
             </SwiperSlide>
           ))}
