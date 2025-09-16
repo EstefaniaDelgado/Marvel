@@ -49,8 +49,8 @@ La app se iniciará en [http://localhost:5173](http://localhost:5173) (por defec
 
 ### Tecnologías
 - Node.js + Express
-- Base de datos: **[especificar aquí: MongoDB / PostgreSQL / SQLite]**
-- Dotenv para variables de entorno
+- Base de datos: ** MongoDB **
+
 
 ### Endpoints requeridos
 - `POST /characters` → Crear personaje con:
