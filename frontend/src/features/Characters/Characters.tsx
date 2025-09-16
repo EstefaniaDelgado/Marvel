@@ -1,4 +1,4 @@
-import Character from "../components/Character.tsx";
+import Character from "./components/Character.tsx";
 
 export default function Characters() {
   const characters = [

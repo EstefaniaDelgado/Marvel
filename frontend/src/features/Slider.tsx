@@ -1,26 +1,77 @@
-export default function Slider() {
-  const comicCovers = [
-    { id: 1, title: "Spider-Man", image: "https://via.placeholder.com/200x300/FF0000/FFFFFF?text=Spider-Man" },
-    { id: 2, title: "Ultimate Force", image: "https://via.placeholder.com/200x300/00FF00/FFFFFF?text=Ultimate+Force" },
-    { id: 3, title: "Iron Man", image: "https://via.placeholder.com/200x300/FFD700/000000?text=Iron+Man" },
-    { id: 4, title: "Thor", image: "https://via.placeholder.com/200x300/0000FF/FFFFFF?text=Thor" },
-    { id: 5, title: "Hulk", image: "https://via.placeholder.com/200x300/00AA00/FFFFFF?text=Hulk" }
-  ];
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Scrollbar, EffectCoverflow } from 'swiper/modules';
+import './slider.css';
 
+const comicCovers = [
+  {
+    id: 1,
+    title: 'Spider-Man',
+    image:
+      'https://plus.unsplash.com/premium_photo-1666278379770-440439b08656?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWFsZXN8ZW58MHx8MHx8fDA%3D',
+  },
+  {
+    id: 2,
+    title: 'Ultimate Force',
+    image:
+      'https://plus.unsplash.com/premium_photo-1666278379770-440439b08656?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWFsZXN8ZW58MHx8MHx8fDA%3D',
+  },
+  {
+    id: 3,
+    title: 'Iron Man',
+    image:
+      'https://plus.unsplash.com/premium_photo-1666278379770-440439b08656?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWFsZXN8ZW58MHx8MHx8fDA%3D',
+  },
+  {
+    id: 4,
+    title: 'Thor',
+    image:
+      'https://plus.unsplash.com/premium_photo-1666278379770-440439b08656?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWFsZXN8ZW58MHx8MHx8fDA%3D',
+  },
+  {
+    id: 5,
+    title: 'Hulk',
+    image:
+      'https://plus.unsplash.com/premium_photo-1666278379770-440439b08656?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWFsZXN8ZW58MHx8MHx8fDA%3D',
+  },
+];
+
+export default function Slider() {
   return (
-    <div className="py-8 mb-8">
-      <div className="overflow-x-auto">
-        <div className="flex space-x-4 px-4 min-w-max">
+    <div className="w-full h-screen flex flex-col justify-center items-center  mx-auto   mb-8 bg-[#E4E6EB]">
+      <div className="bg-yellow-200 pt-4 w-full h-full md:w-[75%] flex ">
+        <Swiper
+          modules={[Pagination, Scrollbar, EffectCoverflow]}
+          effect={'coverflow'}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={'auto'}
+          spaceBetween={150} // 👉 espacio entre tarjetas
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 50, // 👉 separación extra en el efecto
+            depth: 200,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          // className="w-full max-w-5xl "
+          className="w-full max-w-7xl"
+      
+        >
           {comicCovers.map((comic) => (
-            <div key={comic.id} className="flex-shrink-0">
+            <SwiperSlide
+              key={comic.id}
+              className="!w-[180px] md:!w-[220px] lg:!w-[260px] flex justify-center transition-transform duration-300"
+            >
               <img
                 src={comic.image}
                 alt={comic.title}
-                className="w-32 h-48 md:w-40 md:h-60 lg:w-48 lg:h-72 object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="w-full h-80 lg:h-[400px] object-cover shadow-lg"
               />
-            </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
     </div>
   );
