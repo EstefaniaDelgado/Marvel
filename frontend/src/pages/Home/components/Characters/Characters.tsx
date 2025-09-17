@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid, Pagination } from "swiper/modules";
 import "./characters.css";
-import { useMarvelCharacters, type MarvelCharacter } from "../../hooks/useMarvelCharacters";
+import { useMarvelCharacters, type MarvelCharacter } from "../../../../hooks/useMarvelCharacters";
 import CharacterModal from "./components/CharacterModal";
 
 export default function Characters() {

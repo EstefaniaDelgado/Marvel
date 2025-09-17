@@ -1,5 +1,5 @@
 import { SwiperSlide } from "swiper/react";
-import type { MarvelCharacter } from "../../../hooks/useMarvelCharacters";
+import type { MarvelCharacter } from "../../../../../hooks/useMarvelCharacters";
 
 interface CharacterProps {
   character: MarvelCharacter;

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { MarvelCharacter } from "../../../hooks/useMarvelCharacters";
+import type { MarvelCharacter } from "../../../../../hooks/useMarvelCharacters";
 
 interface CharacterModalProps {
   isOpen: boolean;

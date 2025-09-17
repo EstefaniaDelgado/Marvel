@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import IronMan from '../assets/iron-man.svg'
+import IronMan from '../../../assets/iron-man.svg'
 
 export default function Form() {
   const [formData, setFormData] = useState({
