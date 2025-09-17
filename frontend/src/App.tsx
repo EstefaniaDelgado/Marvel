@@ -2,6 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home/Home";
 import CharacterDetail from "./pages/Home/components/Characters/components/CharacterDetail";
+import CharacterProvider from "./context/CharacterContext";
+
+
 
 
 const router = createBrowserRouter([
@@ -22,7 +25,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <CharacterProvider>
+      <RouterProvider router={router} />
+    </CharacterProvider>
+  );
 }
 
 export default App;
