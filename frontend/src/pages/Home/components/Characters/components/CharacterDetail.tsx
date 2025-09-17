@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { generateMarvelAuth, MARVEL_CONFIG } from "../../../../../services/index";
 import CharacterDetailSkeleton from "../components/CharacterDetailSkeleton";
-import type { MarvelCharacter } from "../../../../../hooks/useMarvelCharacters";
+import { characterService, type MarvelCharacter } from "../../../../../services/character.service";
 
 export default function CharacterDetail() {
   const { id } = useParams<{ id: string }>();
@@ -18,35 +17,16 @@ export default function CharacterDetail() {
         setLoading(true);
         setError(null);
 
-        const authParams = generateMarvelAuth();
-        const params = new URLSearchParams(authParams);
-
-        const response = await fetch(
-          `${MARVEL_CONFIG.baseUrl}/characters/${id}?${params}`
-        );
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        const isCustom = id.length === 24 && /^[0-9a-fA-F]{24}$/.test(id);
+        
+        let character;
+        if (isCustom) {
+          character = await characterService.getCustomCharacterById(id);
+        } else {
+          character = await characterService.getMarvelCharacterById(parseInt(id));
         }
-
-        const data = await response.json();
-        const characterData = data.data.results[0];
-
-        if (characterData) {
-          const transformedCharacter: MarvelCharacter = {
-            id: characterData.id,
-            name: characterData.name,
-            image: `${characterData.thumbnail.path}.${characterData.thumbnail.extension}`,
-            creationDate: characterData.modified
-              ? new Date(characterData.modified).getFullYear().toString()
-              : "N/A",
-            description:
-              characterData.description || "Sin descripción disponible",
-            comics: characterData.comics.available,
-            series: characterData.series.available,
-          };
-          setCharacter(transformedCharacter);
-        }
+        
+        setCharacter(character);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error desconocido");
       } finally {
@@ -122,7 +102,7 @@ export default function CharacterDetail() {
 
                 <div className="bg-white rounded-lg p-4">
                   <div className="text-sm text-gray-500 mb-1">
-                    Fecha de Creación
+                    Fecha de Creaci贸n
                   </div>
                   <div className="text-lg font-semibold text-gray-800">
                     {character.creationDate}
@@ -133,9 +113,9 @@ export default function CharacterDetail() {
 
             <div className="mt-8 ml-[25%] w-[75%] bg-gray-200 rounded-l-full pl-12 p-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                Descripción
+                Descripci贸n
               </h3>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed line-clamp-3">
                 {character.description}
               </p>
             </div>
@@ -182,18 +162,18 @@ export default function CharacterDetail() {
 
             <div className="bg-white rounded-lg p-4 text-center">
               <div className="text-sm text-gray-500 mb-1">
-                Fecha de Creación
+                Fecha de Creaci贸n
               </div>
               <div className="text-lg font-semibold text-gray-800">
                 {character.creationDate}
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">
-                Descripción
+            <div className="mr-[5%] w-[95%] bg-gray-200 rounded-r-full pr-6 p-4">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                Descripci贸n
               </h3>
-              <p className="text-gray-700 text-sm leading-relaxed text-center">
+              <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
                 {character.description}
               </p>
             </div>
