@@ -1,32 +1,53 @@
-import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid, Pagination } from "swiper/modules";
+import { useNavigate } from "react-router-dom";
 import "./characters.css";
 import { useMarvelCharacters, type MarvelCharacter } from "../../../../hooks/useMarvelCharacters";
-import CharacterModal from "./components/CharacterModal";
 
 export default function Characters() {
   const { characters, loading, error } = useMarvelCharacters(12, 0);
-  const [selectedCharacter, setSelectedCharacter] =
-    useState<MarvelCharacter | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleCharacterClick = (character: MarvelCharacter) => {
-    setSelectedCharacter(character);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedCharacter(null);
+    navigate(`/character/${character.id}`);
   };
 
   if (loading) {
     return (
-      <div className="w-full bg-gray-50 py-8 my-8">
-        <div className="container mx-auto px-4 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando personajes...</p>
+      <div className="w-full bg-gray-50 py-2 my-8">
+        <div className="container mx-auto w-full max-w-2xl md:max-w-4xl px-4">
+          <h1 className="text-3xl font-bold text-center my-4 text-gray-800">
+            Characters
+          </h1>
+          <div className="mx-auto">
+            <div className="responsive-grid-swiper">
+              <div className="md:hidden space-y-5">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg animate-pulse">
+                  <div className="aspect-square bg-gray-300"></div>
+                </div>
+              </div>
+
+              <div className="hidden md:grid grid-cols-2 gap-8">
+                {[...Array(4)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="bg-white rounded-2xl overflow-hidden shadow-lg animate-pulse"
+                  >
+                    <div className="aspect-square bg-gray-300"></div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex justify-center mt-6 space-x-2">
+                {[...Array(3)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-2 h-2 bg-gray-300 rounded-full animate-pulse"
+                  ></div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -34,9 +55,14 @@ export default function Characters() {
 
   if (error) {
     return (
-      <div className="w-full bg-gray-50 py-8 my-8">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-red-600">Error: {error}</p>
+      <div className="w-full bg-gray-50 py-2 my-8">
+        <div className="container mx-auto w-full max-w-2xl md:max-w-4xl px-4">
+          <h1 className="text-3xl font-bold text-center my-4 text-gray-800">
+            Characters
+          </h1>
+          <div className="text-center">
+            <p className="text-red-600">Error: {error}</p>
+          </div>
         </div>
       </div>
     );
@@ -76,11 +102,10 @@ export default function Characters() {
           >
             {characters.map((character) => (
               <SwiperSlide key={character.id} className="h-auto">
-                <div 
+                <div
                   className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full group cursor-pointer"
                   onClick={() => handleCharacterClick(character)}
                 >
-                  {/* Character Image */}
                   <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                     <img
                       src={character.image}
@@ -90,14 +115,11 @@ export default function Characters() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                   </div>
 
-                  {/* Character Information */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    {/* Character name */}
                     <h3 className="text-white text-lg md:text-xl font-bold mb-1 drop-shadow-lg">
                       {character.name}
                     </h3>
 
-                    {/* Creation date */}
                     <div className="flex items-center justify-between">
                       <span className="text-white/90 text-xs md:text-sm font-medium bg-black/20 px-2 py-1 rounded-full backdrop-blur-sm">
                         {character.creationDate}
@@ -124,12 +146,6 @@ export default function Characters() {
           </Swiper>
         </div>
       </div>
-
-      <CharacterModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        character={selectedCharacter}
-      />
     </div>
   );
 }
