@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { generateMarvelAuth, MARVEL_CONFIG } from "../../../../../services/index";
 import CharacterDetailSkeleton from "../components/CharacterDetailSkeleton";
 import type { MarvelCharacter } from "../../../../../hooks/useMarvelCharacters";
+import { generateMarvelAuth, MARVEL_CONFIG } from "../../../../../services";
 
 export default function CharacterDetail() {
   const { id } = useParams<{ id: string }>();
@@ -135,7 +135,7 @@ export default function CharacterDetail() {
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
                 Descripción
               </h3>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed line-clamp-3">
                 {character.description}
               </p>
             </div>
@@ -189,11 +189,11 @@ export default function CharacterDetail() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">
+            <div className="mr-[5%] w-[95%] bg-gray-200 rounded-r-full pr-6 p-4">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">
                 Descripción
               </h3>
-              <p className="text-gray-700 text-sm leading-relaxed text-center">
+              <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
                 {character.description}
               </p>
             </div>
