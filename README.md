@@ -1,138 +1,185 @@
-# 🚀 Marvel Landing - Fullstack Test
+# 🚀 Marvel Landing - Fullstack Application
 
-Prueba técnica para desarrollador Web Full Stack.  
-Este proyecto está dividido en **Frontend (React + Tailwind + Vite)** y **Backend (Express + DB)**.  
+Aplicación fullstack que consume la API de Marvel y permite crear personajes personalizados.  
+Proyecto dividido en **Frontend (React + TypeScript + Tailwind)** y **Backend (Express + TypeScript + MongoDB)**.
 
 ---
 
-## 📂 Estructura del proyecto
+## 📋 Índice
+
+- [🚀 Inicio Rápido](#-inicio-rápido)
+- [📂 Estructura del Proyecto](#-estructura-del-proyecto)
+- [🔧 Configuración del Entorno](#-configuración-del-entorno)
+- [📡 API Endpoints](#-api-endpoints)
+
+---
+
+## 🚀 Inicio Rápido
+
+### Prerrequisitos
+
+- Node.js (v18 o superior)
+- MongoDB (local o MongoDB Atlas)
+- Claves de API de Marvel ([Marvel Developer Portal](https://developer.marvel.com/))
+
+### Instalación Completa
+
+1. **Clonar el repositorio**
+
+   ```bash
+   git clone <repository-url>
+   cd marvel
+   ```
+
+2. **Configurar variables de entorno**
+
+   ```bash
+   # Copiar archivo de ejemplo
+   cp .env.example .env
+
+   # Editar .env con tus credenciales
+   ```
+
+3. **Instalar dependencias del backend**
+
+   ```bash
+   cd backend
+   npm install
+   ```
+
+4. **Instalar dependencias del frontend**
+
+   ```bash
+   cd ../frontend
+   npm install
+   ```
+
+5. **Ejecutar la aplicación**
+
+   ```bash
+   # Terminal 1 - Backend
+   cd backend
+   npm run dev
+
+   # Terminal 2 - Frontend
+   cd frontend
+   npm run dev
+   ```
+
+6. **Acceder a la aplicación**
+   - Frontend: [http://localhost:5173](http://localhost:5173)
+   - Backend API: [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 📂 Estructura del Proyecto
+
 ```
 marvel/
- ├── frontend/   # React + Tailwind (landing page)
- ├── backend/    # Express (API REST de characters)
- ├── .gitignore
- ├── .env.example
- └── README.md
+├── frontend/                 # React + TypeScript + Tailwind
+│   ├── src/
+│   │   ├── components/       # Componentes reutilizables
+│   │   ├── features/         # Funcionalidades principales
+│   │   ├── hooks/           # Custom hooks
+│   │   ├── pages/           # Páginas de la aplicación
+│   │   ├── services/        # Servicios de API
+│   │   └── types/           # Definiciones de tipos
+│   ├── .env.example
+│   └── package.json
+├── backend/                  # Express + TypeScript + MongoDB
+│   ├── src/
+│   │   ├── controllers/     # Controladores HTTP
+│   │   ├── dtos/           # Data Transfer Objects
+│   │   ├── models/         # Modelos de MongoDB
+│   │   ├── routes/         # Rutas de la API
+│   │   └── services/       # Lógica de negocio
+│   ├── .env.example
+│   └── package.json
+├── .env.example             # Variables de entorno globales
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-<details>
-<summary>🎨 Frontend</summary>
+## 🔧 Configuración del Entorno
 
-### Tecnologías
-- React (con Vite)
-- Tailwind CSS
-- React Router
-- Consumo de la API de Marvel
+### Variables de Entorno Requeridas
 
-### Funcionalidades
-- **Sección 1**: Slider de series/comics de Marvel.  
-- **Sección 2**: Cards de personajes (12 iniciales de Marvel + los creados en el backend).  
-- **Sección 3**: Formulario para crear un nuevo personaje (nombre, fecha, descripción, imagen).  
-- **Extra (opcional)**: Vista detalle `/characters/:id` con descripción ampliada.  
+Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
 
-### Instalación y ejecución
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-La app se iniciará en [http://localhost:5173](http://localhost:5173) (por defecto en Vite).
-</details>
-
----
-
-<details>
-<summary>⚙️ Backend</summary>
-
-### Tecnologías
-- Node.js + Express
-- Base de datos: ** MongoDB **
-
-
-### Endpoints requeridos
-- `POST /characters` → Crear personaje con:
-  - `name` (alfabético)  
-  - `date` (string alfabético)  
-  - `description` (alfabético)  
-  - `img` (url)  
-
-- `GET /characters/:id` → Obtener personaje por ID  
-
-- *(Opcional)* `GET /characters` → Listar todos los personajes creados  
-
-### Instalación y ejecución
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-El servidor correrá en [http://localhost:3000](http://localhost:3000) (configurable vía `.env`).
-</details>
-
----
-
-<details>
-<summary>🔑 Variables de entorno</summary>
-
-Debes crear un archivo `.env` en la raíz a partir de `.env.example`:  
-
-```bash
-cp .env.example .env
-```
-
-### Ejemplo contenido `.env`:
 ```env
 # ==========================
 # Frontend (React + Vite)
 # ==========================
-VITE_MARVEL_PUBLIC_KEY=tu_public_key_aqui
-VITE_MARVEL_PRIVATE_KEY=tu_private_key_aqui
-VITE_API_BASE_URL=http://localhost:5000   # URL del backend
+VITE_MARVEL_PUBLIC_KEY=tu_marvel_public_key
+VITE_MARVEL_PRIVATE_KEY=tu_marvel_private_key
+VITE_API_BASE_URL=http://localhost:3000
 
 # ==========================
 # Backend (Express)
 # ==========================
-PORT=5000
+PORT=3000
 
-# Base de datos
-# Ejemplo con MongoDB Atlas:
+# ==========================
+# Base de Datos (MongoDB)
+# ==========================
+# Opción 1: MongoDB Atlas (recomendado)
 DB_URI=mongodb+srv://usuario:password@cluster0.mongodb.net/marvel-db
 
+# Opción 2: MongoDB Local
+# DB_URI=mongodb://localhost:27017/marvel-db
 ```
-</details>
+
+### Obtener Claves de Marvel API
+
+1. Registrarse en [Marvel Developer Portal](https://developer.marvel.com/)
+2. Crear una nueva aplicación
+3. Copiar las claves pública y privada
+4. Agregar las claves al archivo `.env`
+
+#### Esquema de Personajes Personalizados
+
+```typescript
+{
+  name: String,        // Solo caracteres alfabéticos
+  date: String,        // Fecha de creación
+  description: String, // Solo caracteres alfabéticos
+  img: String         // URL de imagen
+}
+```
 
 ---
 
-<details>
-<summary>📦 Scripts útiles</summary>
+## 📡 API Endpoints
 
-- **Frontend**
-  - `npm run dev` → Inicia servidor de desarrollo
-  - `npm run build` → Construye la app
+### Personajes
 
-- **Backend**
-  - `npm run dev` → Inicia servidor con nodemon (si lo configuras)
-  - `npm start` → Inicia servidor en producción
-</details>
+| Método | Endpoint                 | Descripción                                    |
+| ------ | ------------------------ | ---------------------------------------------- |
+| `GET`  | `/characters`            | Todos los personajes (Marvel + personalizados) |
+| `GET`  | `/characters/merged`     | Personajes combinados con formato unificado    |
+| `GET`  | `/characters/marvel`     | Solo personajes de Marvel                      |
+| `GET`  | `/characters/marvel/:id` | Personaje específico de Marvel                 |
+| `GET`  | `/characters/custom/:id` | Personaje personalizado específico             |
+| `GET`  | `/characters/:id`        | Personaje personalizado por ID                 |
+| `POST` | `/characters`            | Crear nuevo personaje personalizado            |
 
----
+### Contenido Marvel
 
-<details>
-<summary>📝 Notas</summary>
+| Método | Endpoint             | Descripción      |
+| ------ | -------------------- | ---------------- |
+| `GET`  | `/characters/comics` | Comics de Marvel |
+| `GET`  | `/characters/series` | Series de Marvel |
 
-- El diseño de la landing page sigue el [Figma proporcionado](https://www.figma.com/design/hybU1uhWNTfZzovZKHhRYh/Prueba-tecnica-WH?node-id=2020-30&t=w7rhHkhr8Da30Gpc-1) (contraseña: `WH1234`).  
-- El diseño es **responsive** siguiendo la guía de Figma.  
-- Para consumir la API de Marvel, se deben generar claves en [Marvel Developer Portal](https://developer.marvel.com/).  
-</details>
+### Ejemplo de Creación de Personaje
 
----
-
-<details>
-<summary>📤 Entrega</summary>
-
-- Repositorio público en GitHub: **[colocar URL aquí]**    
-</details>
+```json
+POST /characters
+{
+  "name": "Mi Heroe",
+  "date": "2024-01-15",
+  "description": "Un heroe personalizado",
+  "img": "https://ejemplo.com/imagen.jpg"
+}
+```
