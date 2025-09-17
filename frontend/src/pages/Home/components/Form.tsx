@@ -107,8 +107,8 @@ export default function Form() {
             </div>
           </div>
           {/* Left side - Form inputs */}
-          <div className="pt-12  md:pt-5 md:w-full md:bg-[#E4E6EB] px-6 md:px-8 md:pb-4 md:my-8 xl:my-16   text-center md:text-left lg:text-xl  md:flex md:flex-col md:justify-center space-y-4">
-            <div className="md:w-1/2">
+          <div className="pt-12 md:pt-5 md:w-full md:bg-[#E4E6EB] px-6 md:px-8 md:pb-4 md:my-8 xl:my-16   text-center md:text-left lg:text-xl  md:flex md:flex-col md:justify-center ">
+            <div className="md:w-1/2 md:px-10 space-y-4">
               <div>
                 <label
                   htmlFor="name"
@@ -199,7 +199,7 @@ export default function Form() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full md:w-[70%] md:mt-3 bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full md:w-[70%] mt-3 bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Creating...' : 'Create Character'}
               </button>
