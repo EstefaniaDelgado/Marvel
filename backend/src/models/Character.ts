@@ -16,7 +16,6 @@ const CharacterSchema: Schema = new Schema({
   date: {
     type: String,
     required: true,
-    match: /^[a-zA-Z\s]+$/
   },
   description: {
     type: String,

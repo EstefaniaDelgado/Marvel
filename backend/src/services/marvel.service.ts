@@ -33,6 +33,7 @@ export interface MarvelCharacter {
   description: string;
   comics: number;
   series: number;
+  isCustom?: boolean;
 }
 
 export class MarvelService {

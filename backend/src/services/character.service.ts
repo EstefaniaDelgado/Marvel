@@ -9,8 +9,20 @@ export class CharacterService {
     this.marvelService = new MarvelService();
   }
 
-  async getCharacterById(id: string): Promise<ICharacter | null> {
-    return await Character.findById(id);
+  async getCustomCharacterById(id: string): Promise<MarvelCharacter | null> {
+    const character = await Character.findById(id);
+    if (!character) return null;
+
+    return {
+      id: character._id as any,
+      name: character.name,
+      image: character.img,
+      creationDate: character.date,
+      description: character.description,
+      comics: 0,
+      series: 0,
+      isCustom: true
+    };
   }
 
   async createCharacter(characterData: CreateCharacterDto): Promise<ICharacter> {
@@ -18,7 +30,7 @@ export class CharacterService {
     return await character.save();
   }
 
-  async getMarvelCharacters(limit = 20, offset = 0): Promise<MarvelCharacter[]> {
+  async getMarvelCharacters(limit = 12, offset = 0): Promise<MarvelCharacter[]> {
     return await this.marvelService.getCharacters(limit, offset);
   }
 
@@ -26,7 +38,7 @@ export class CharacterService {
     return await this.marvelService.getCharacterById(id);
   }
 
-  async getAllCharacters(limit = 20, offset = 0): Promise<{ marvel: MarvelCharacter[], custom: ICharacter[] }> {
+  async getAllCharacters(limit = 12, offset = 0): Promise<{ marvel: MarvelCharacter[], custom: ICharacter[] }> {
     const [marvelCharacters, customCharacters] = await Promise.all([
       this.getMarvelCharacters(limit, offset),
       Character.find().limit(limit).skip(offset)
@@ -36,6 +48,26 @@ export class CharacterService {
       marvel: marvelCharacters,
       custom: customCharacters
     };
+  }
+
+  async getMergedCharacters(limit = 20, offset = 0): Promise<any[]> {
+    const [marvelCharacters, customCharacters] = await Promise.all([
+      this.getMarvelCharacters(limit, offset),
+      Character.find().limit(limit).skip(offset)
+    ]);
+
+    const transformedCustom = customCharacters.map(char => ({
+      id: char._id,
+      name: char.name,
+      image: char.img,
+      creationDate: char.date,
+      description: char.description,
+      comics: 0,
+      series: 0,
+      isCustom: true
+    }));
+
+    return [...marvelCharacters, ...transformedCustom];
   }
 
   async getComics(limit = 20, offset = 0) {

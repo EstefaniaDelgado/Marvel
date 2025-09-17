@@ -11,7 +11,7 @@ export class CharacterController {
 
   getCharacterById = async (req: Request, res: Response) => {
     try {
-      const character = await this.characterService.getCharacterById(
+      const character = await this.characterService.getCustomCharacterById(
         req.params.id
       );
       if (!character) {
@@ -92,6 +92,29 @@ export class CharacterController {
       const offset = parseInt(req.query.offset as string) || 0;
       const series = await this.characterService.getSeries(limit, offset);
       res.json(series);
+    } catch (error) {
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+
+  getMergedCharacters = async (req: Request, res: Response) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 20;
+      const offset = parseInt(req.query.offset as string) || 0;
+      const characters = await this.characterService.getMergedCharacters(limit, offset);
+      res.json(characters);
+    } catch (error) {
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+
+  getCustomCharacterById = async (req: Request, res: Response) => {
+    try {
+      const character = await this.characterService.getCustomCharacterById(req.params.id);
+      if (!character) {
+        return res.status(404).json({ message: "Custom character not found" });
+      }
+      res.json(character);
     } catch (error) {
       res.status(500).json({ message: "Server error" });
     }
