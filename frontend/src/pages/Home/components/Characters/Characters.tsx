@@ -2,7 +2,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import "./characters.css";
-import { useMarvelCharacters, type MarvelCharacter } from "../../../../hooks/useMarvelCharacters";
+import { useMarvelCharacters } from "../../../../hooks/useMarvelCharacters";
+import type { MarvelCharacter } from "../../../../services/character.service";
+
 
 export default function Characters() {
   const { characters, loading, error } = useMarvelCharacters(12, 0);
@@ -125,18 +127,25 @@ export default function Characters() {
                         {character.creationDate}
                       </span>
 
-                      <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                        <svg
-                          className="w-3 h-3 text-white"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
+                      <div className="flex items-center space-x-2">
+                        {character.isCustom && (
+                          <span className="text-xs bg-green-500 text-white px-2 py-1 rounded-full font-medium">
+                            Custom
+                          </span>
+                        )}
+                        <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                          <svg
+                            className="w-3 h-3 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                   </div>
