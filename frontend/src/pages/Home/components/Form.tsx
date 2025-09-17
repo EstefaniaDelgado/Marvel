@@ -4,6 +4,7 @@ import {
   characterService,
   type CreateCharacterDto,
 } from '../../../services/character.service';
+import { useCharacterContext } from '../../../context/useCharacterContext';
 
 export default function Form() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export default function Form() {
   });
 
   const [previewImage, setPreviewImage] = useState<string>('');
+  const { triggerRefetch } = useCharacterContext();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -49,6 +51,7 @@ export default function Form() {
       setMessage('Character created successfully!');
       setFormData({ name: '', date: '', description: '', img: '' });
       setPreviewImage('');
+      await triggerRefetch()
     } catch (error) {
       const errorMessage =
         error instanceof Error

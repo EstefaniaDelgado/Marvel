@@ -1,14 +1,24 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import "./characters.css";
+import { useCharacterContext } from "../../../../context/useCharacterContext";
 import { useMarvelCharacters } from "../../../../hooks/useMarvelCharacters";
 import type { MarvelCharacter } from "../../../../services/character.service";
 
 
 export default function Characters() {
-  const { characters, loading, error } = useMarvelCharacters(12, 0);
+  const { characters, loading, error, refetch } = useMarvelCharacters(12, 0);
+  const { shouldRefetch, resetRefetch } = useCharacterContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (shouldRefetch) {
+      refetch();
+      resetRefetch();
+    }
+  }, [shouldRefetch, refetch, resetRefetch]);
 
   const handleCharacterClick = (character: MarvelCharacter) => {
     navigate(`/character/${character.id}`);
