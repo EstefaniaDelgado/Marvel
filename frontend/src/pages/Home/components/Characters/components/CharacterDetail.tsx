@@ -102,7 +102,7 @@ export default function CharacterDetail() {
 
                 <div className="bg-white rounded-lg p-4">
                   <div className="text-sm text-gray-500 mb-1">
-                    Fecha de Creaci贸n
+                    Create Date
                   </div>
                   <div className="text-lg font-semibold text-gray-800">
                     {character.creationDate}
@@ -113,7 +113,7 @@ export default function CharacterDetail() {
 
             <div className="mt-8 ml-[25%] w-[75%] bg-gray-200 rounded-l-full pl-12 p-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                Descripci贸n
+                Description
               </h3>
               <p className="text-gray-700 leading-relaxed line-clamp-3">
                 {character.description}

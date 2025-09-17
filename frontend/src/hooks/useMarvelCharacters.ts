@@ -21,7 +21,7 @@ export interface UseMarvelCharactersReturn {
 }
 
 export const useMarvelCharacters = (
-  limit = 20,
+  limit = 12,
   offset = 0
 ): UseMarvelCharactersReturn => {
   const [characters, setCharacters] = useState<MarvelCharacter[]>([]);
@@ -33,7 +33,7 @@ export const useMarvelCharacters = (
       setLoading(true);
       setError(null);
       
-      const characters = await characterService.getMarvelCharacters(limit, offset);
+      const characters = await characterService.getMergedCharacters(limit, offset);
       setCharacters(characters);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
